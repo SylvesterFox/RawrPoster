@@ -1,0 +1,76 @@
+﻿<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="RawPoster.UI.Views.MainView">
+
+    <ScrollViewer>
+        <StackPanel
+            Margin="24"
+            Spacing="16"
+            MaxWidth="700"
+            HorizontalAlignment="Center">
+
+            <!-- Заголовок -->
+            <TextBlock
+                Text="RawrPoster"
+                FontSize="28"
+                FontWeight="Bold"
+                HorizontalAlignment="Center" />
+
+            <TextBlock
+                Text="Публикация поста в Telegram"
+                FontSize="16"
+                Opacity="0.7"
+                HorizontalAlignment="Center" />
+
+            <!-- Канал -->
+            <StackPanel Spacing="6">
+                <TextBlock
+                    Text="Telegram-канал"
+                    FontWeight="SemiBold" />
+
+                <TextBox
+                    Name="ChannelTextBox"
+                    Watermark="@channel или ID канала" />
+            </StackPanel>
+
+            <!-- Текст поста -->
+            <StackPanel Spacing="6">
+                <TextBlock
+                    Text="Текст поста"
+                    FontWeight="SemiBold" />
+
+                <TextBox
+                    Name="PostTextBox"
+                    Watermark="Введите текст поста..."
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    MinHeight="220"
+                    VerticalContentAlignment="Top" />
+            </StackPanel>
+
+            <!-- Кнопка -->
+            <Button
+                Name="PublishButton"
+                Content="Опубликовать"
+                HorizontalAlignment="Stretch"
+                Height="48"
+                />
+
+            <!-- Статус -->
+            <Border
+                Padding="12"
+                CornerRadius="8"
+                Background="#202225">
+
+                <TextBlock
+                    Name="StatusTextBlock"
+                    Text="Готово к публикации"
+                    HorizontalAlignment="Center" />
+
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

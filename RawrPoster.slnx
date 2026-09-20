@@ -1,0 +1,16 @@
+<Solution>
+  <Project Path="RawPoster.UI/RawPoster.UI.Android/RawPoster.UI.Android.csproj" Id="f956933b-9244-45ab-8ef9-28a54aaf38f0">
+    <Deploy />
+  </Project>
+  <Project Path="RawPoster.UI/RawPoster.UI.Browser/RawPoster.UI.Browser.csproj" Id="f3c3dab8-c9b9-4e4f-89eb-d13765ba552b">
+    <Build Solution="Debug|*" Project="false" />
+  </Project>
+  <Project Path="RawPoster.UI/RawPoster.UI.Desktop/RawPoster.UI.Desktop.csproj" Id="0427033a-80ca-4526-817f-0f914812c7f5" />
+  <Project Path="RawPoster.UI/RawPoster.UI.iOS/RawPoster.UI.iOS.csproj" Id="045ad426-d7d7-44fd-b994-e12397a239be">
+    <Build Solution="Debug|*" Project="false" />
+  </Project>
+  <Project Path="RawPoster.UI/RawPoster.UI/RawPoster.UI.csproj" Id="93b90f44-0ef9-4ba4-a705-b5c88d089df5" />
+  <Project Path="RawrPoster.Core/RawrPoster.Core.csproj" />
+  <Project Path="RawrPoster.Infrastructure/RawrPoster.Infrastructure.csproj" />
+  <Project Path="VectoPoster.Application/RawrPoster.Application.csproj" />
+</Solution>
