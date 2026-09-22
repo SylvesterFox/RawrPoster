@@ -1,76 +1,15 @@
-﻿<UserControl
-    xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Class="RawPoster.UI.Views.MainView">
-
-    <ScrollViewer>
-        <StackPanel
-            Margin="24"
-            Spacing="16"
-            MaxWidth="700"
-            HorizontalAlignment="Center">
-
-            <!-- Заголовок -->
-            <TextBlock
-                Text="RawrPoster"
-                FontSize="28"
-                FontWeight="Bold"
-                HorizontalAlignment="Center" />
-
-            <TextBlock
-                Text="Публикация поста в Telegram"
-                FontSize="16"
-                Opacity="0.7"
-                HorizontalAlignment="Center" />
-
-            <!-- Канал -->
-            <StackPanel Spacing="6">
-                <TextBlock
-                    Text="Telegram-канал"
-                    FontWeight="SemiBold" />
-
-                <TextBox
-                    Name="ChannelTextBox"
-                    Watermark="@channel или ID канала" />
-            </StackPanel>
-
-            <!-- Текст поста -->
-            <StackPanel Spacing="6">
-                <TextBlock
-                    Text="Текст поста"
-                    FontWeight="SemiBold" />
-
-                <TextBox
-                    Name="PostTextBox"
-                    Watermark="Введите текст поста..."
-                    AcceptsReturn="True"
-                    TextWrapping="Wrap"
-                    MinHeight="220"
-                    VerticalContentAlignment="Top" />
-            </StackPanel>
-
-            <!-- Кнопка -->
-            <Button
-                Name="PublishButton"
-                Content="Опубликовать"
-                HorizontalAlignment="Stretch"
-                Height="48"
-                />
-
-            <!-- Статус -->
-            <Border
-                Padding="12"
-                CornerRadius="8"
-                Background="#202225">
-
-                <TextBlock
-                    Name="StatusTextBlock"
-                    Text="Готово к публикации"
-                    HorizontalAlignment="Center" />
-
-            </Border>
-
-        </StackPanel>
-    </ScrollViewer>
-
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:RawPoster.UI.ViewModels" xmlns:core="using:RawrPoster.Core.Entites" xmlns:app="using:RawrPoster.Application.Interfaces" x:Class="RawPoster.UI.Views.MainView" x:DataType="vm:MainViewModel">
+  <Grid RowDefinitions="Auto,*" Background="{DynamicResource Surface}">
+    <Border Classes="Card Elevated" Padding="24,16"><Grid ColumnDefinitions="*,Auto"><StackPanel><TextBlock Classes="TitleLarge" Text="RawrPoster"/><TextBlock Classes="BodyMedium" Text="Telegram post editor" Opacity=".72"/></StackPanel><Button Grid.Column="1" Classes="Text" Content="New post" Command="{Binding NewPostCommand}"/></Grid></Border>
+    <Grid Grid.Row="1" ColumnDefinitions="250,*" Margin="20" ColumnSpacing="20">
+      <Border Classes="Card Filled" Padding="16"><ScrollViewer><StackPanel Spacing="12"><TextBlock Classes="TitleMedium" Text="Templates"/><ComboBox ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplate}"><ComboBox.ItemTemplate><DataTemplate x:DataType="core:PostTemplate"><TextBlock Text="{Binding Name}"/></DataTemplate></ComboBox.ItemTemplate></ComboBox><Button Classes="Outlined" Content="Save template" Command="{Binding SaveTemplateCommand}"/><TextBlock Classes="TitleMedium" Margin="0,16,0,0" Text="Saved hashtags"/><ItemsControl ItemsSource="{Binding SavedHashtags}"><ItemsControl.ItemTemplate><DataTemplate x:DataType="core:Hashtag"><TextBlock Classes="BodyMedium" Text="{Binding Value}" Margin="0,3"/></DataTemplate></ItemsControl.ItemTemplate></ItemsControl></StackPanel></ScrollViewer></Border>
+      <ScrollViewer Grid.Column="1"><StackPanel Spacing="16" MaxWidth="900"><TextBlock Classes="HeadlineSmall" Text="Post editor"/><TextBox Classes="Outlined" PlaceholderText="Template name" Text="{Binding TemplateName}"/><TextBox Classes="Outlined" PlaceholderText="@channel or chat ID" Text="{Binding Channel}"/>
+        <Border Classes="Card Elevated" Padding="12"><Grid><TextBox Name="EditorTextBox" Classes="Outlined" PlaceholderText="Write your post…" Text="{Binding PostText}" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="220" VerticalContentAlignment="Top" TextChanged="PostTextChanged"/><Border IsVisible="{Binding IsSuggestionOpen}" Background="{DynamicResource SurfaceContainerHigh}" CornerRadius="12" Padding="8" MaxWidth="260" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="12"><ItemsControl ItemsSource="{Binding HashtagSuggestions}"><ItemsControl.ItemTemplate><DataTemplate x:DataType="core:Hashtag"><Button Classes="Text" Content="{Binding Value}" Click="HashtagClick"/></DataTemplate></ItemsControl.ItemTemplate></ItemsControl></Border></Grid></Border>
+        <StackPanel Orientation="Horizontal" Spacing="10"><Button Classes="FilledTonal" Content="Attach image" Click="AttachImageClick"/><Button Classes="Outlined" Content="Find source" Command="{Binding FindSourceCommand}" IsEnabled="{Binding HasMedia}"/><Button Classes="Text" Content="Remove image" Command="{Binding RemoveImageCommand}" IsVisible="{Binding HasMedia}"/><ToggleSwitch Content="Send image under spoiler" IsChecked="{Binding HasSpoiler}"/></StackPanel>
+        <Border Classes="Card Filled" Padding="12" IsVisible="{Binding HasMedia}"><Grid ColumnDefinitions="160,*" ColumnSpacing="14"><Image Width="160" Height="120" Source="{Binding ImagePreview}" Stretch="UniformToFill"/><StackPanel Grid.Column="1"><TextBlock Classes="TitleSmall" Text="Image attached"/><TextBlock Text="{Binding Media.FileName}"/><TextBlock Text="{Binding Media.SourceUrl}" TextWrapping="Wrap" Opacity=".72"/></StackPanel></Grid></Border><ProgressBar IsIndeterminate="True" IsVisible="{Binding IsSearching}"/>
+        <ItemsControl ItemsSource="{Binding SearchResults}"><ItemsControl.ItemTemplate><DataTemplate x:DataType="app:ImageSearchResult"><Border Classes="Card Outlined" Padding="12" Margin="0,4"><Grid ColumnDefinitions="*,Auto"><StackPanel><TextBlock Classes="TitleSmall" Text="{Binding Site}"/><TextBlock Text="{Binding PostUrl}" TextWrapping="Wrap"/><TextBlock Text="{Binding Distance, StringFormat='Distance: {0}'}"/></StackPanel><Button Grid.Column="1" Classes="Filled" Content="Use source" Click="UseSearchResultClick"/></Grid></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+        <TextBlock Classes="TitleMedium" Text="Telegram preview"/><Border Classes="Card Elevated" Padding="16"><StackPanel Spacing="8"><Image Source="{Binding ImagePreview}" MaxHeight="260" Stretch="Uniform"/><TextBlock Text="{Binding PostText}" TextWrapping="Wrap"/><TextBlock IsVisible="{Binding HasSpoiler}" Text="Spoiler enabled" Opacity=".7"/></StackPanel></Border><Grid ColumnDefinitions="*,Auto"><TextBlock VerticalAlignment="Center" Text="{Binding StatusMessage}" Opacity=".75"/><Button Grid.Column="1" Classes="Filled" Content="Send" Command="{Binding PublishCommand}"/></Grid>
+      </StackPanel></ScrollViewer>
+    </Grid>
+  </Grid>
 </UserControl>
