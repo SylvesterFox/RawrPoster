@@ -10,6 +10,10 @@ namespace RawrPoster.Core.Entites
 
         public string Text { get; set; } = string.Empty;
 
+        public MediaAttachment? Media { get; set; }
+
+        public bool HasSpoiler { get; set; }
+
         public PostStatus Status { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;

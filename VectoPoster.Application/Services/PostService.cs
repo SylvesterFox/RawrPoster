@@ -18,6 +18,8 @@ namespace RawrPoster.Application.Services
         public async Task<long> PublishAsync(
             string channel,
             string text,
+            MediaAttachment? media = null,
+            bool hasSpoiler = false,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(channel))
@@ -34,6 +36,8 @@ namespace RawrPoster.Application.Services
             {
                 Id = Guid.NewGuid(),
                 Text = text,
+                Media = media,
+                HasSpoiler = hasSpoiler,
                 Status = PostStatus.Publishing,
                 CreatedAt = DateTimeOffset.UtcNow
             };
