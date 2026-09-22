@@ -25,13 +25,7 @@ namespace RawrPoster.Infrastructure
             services.AddSingleton<IFileStorage, LocalFileStorage>();
             services.AddScoped<ITemplateService, TemplateService>();
             services.AddScoped<IHashtagService, HashtagService>();
-            services.AddSingleton<ITelegramPublisher>(_ =>
-            {
-                var token = Environment.GetEnvironmentVariable("RAWRPOSTER_TELEGRAM_BOT_TOKEN");
-                if (string.IsNullOrWhiteSpace(token))
-                    throw new InvalidOperationException("Telegram bot token is not configured.");
-                return new TelegramPublisher(new TelegramBotClient(token));
-            });
+            services.AddSingleton<ITelegramPublisher, TelegramPublisher>();
             services.AddTransient<PostService>();
             return services;
         }
