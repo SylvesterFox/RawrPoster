@@ -1,0 +1,312 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RawPoster.UI.Views.Post.CreatePostMobileView">
+
+    <ScrollViewer
+        Margin="5"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto"
+        >
+
+        <StackPanel Spacing="14" HorizontalAlignment="Stretch">
+
+            <StackPanel Spacing="3">
+
+                <TextBlock
+                    Text="Создание поста"
+                    FontSize="24"
+                    FontWeight="SemiBold"
+                    FontFamily="sans-serif"/>
+
+                <TextBlock
+                    Text="Telegram публикация"
+                    Opacity="0.6"
+                    FontFamily="sans-serif"/>
+
+            </StackPanel>
+
+
+            <!-- TEMPLATE -->
+
+            <StackPanel Spacing="6">
+
+                <TextBlock Text="Шаблон" FontFamily="sans-serif"/>
+
+                <ComboBox
+                    Height="46"
+                    PlaceholderText="Выберите шаблон"
+                    FontFamily="sans-serif"/>
+
+            </StackPanel>
+
+
+            <!-- CHANNEL -->
+
+            <StackPanel Spacing="6">
+
+                <TextBlock Text="Канал" FontFamily="sans-serif"/>
+
+                <ComboBox
+                    Height="46"
+                    PlaceholderText="Выберите канал"
+                    FontFamily="sans-serif"/>
+
+            </StackPanel>
+
+
+            <!-- TEXT -->
+
+            <StackPanel Spacing="6" >
+
+                <TextBlock
+                    Text="Текст публикации"
+                    FontWeight="SemiBold"/>
+
+                <Border
+                    BorderBrush="#404040"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="3">
+
+                    <TextBox
+                        x:Name="PostTextBox"
+                        MinHeight="220"
+                        Padding="12"
+                        Watermark="Напишите текст поста..."
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap"
+                        TextAlignment="Left"
+                        VerticalContentAlignment="Top"
+                        HorizontalContentAlignment="Stretch"
+                        FontFamily="sans-serif"
+                        >
+                        
+                    </TextBox>
+
+                </Border>
+
+            </StackPanel>
+
+
+            <!-- MEDIA -->
+
+            <StackPanel Spacing="8">
+
+                <TextBlock
+                    Text="Медиа"
+                    FontSize="17"
+                    FontWeight="SemiBold"/>
+
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Disabled">
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="8">
+
+                        <Border
+                            Width="125"
+                            Height="105"
+                            BorderBrush="#505050"
+                            BorderThickness="1"
+                            CornerRadius="10">
+
+                            <Grid>
+
+                                <Rectangle Fill="#252525"/>
+
+                                <TextBlock
+                                    Text="🖼"
+                                    FontSize="26"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                            </Grid>
+
+                        </Border>
+
+                        <Border
+                            Width="125"
+                            Height="105"
+                            BorderBrush="#505050"
+                            BorderThickness="1"
+                            CornerRadius="10">
+
+                            <Grid>
+
+                                <Rectangle Fill="#252525"/>
+
+                                <TextBlock
+                                    Text="🖼"
+                                    FontSize="26"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                            </Grid>
+
+                        </Border>
+
+                        <Button
+                            Width="125"
+                            Height="105"
+                            Content="＋&#x0a;Добавить"
+                            FontFamily="sans-serif"/>
+
+                    </StackPanel>
+
+                </ScrollViewer>
+
+
+                <StackPanel Spacing="8">
+
+                    <Button
+                        Height="44"
+                        Content="🔎  Найти источник"
+                        FontFamily="sans-serif"/>
+
+                    <CheckBox
+                        Content="Отправить как спойлер"
+                        FontFamily="sans-serif"/>
+
+                    <CheckBox
+                        Grid.Column="1"
+                        Content="Отправить отложено"
+                        FontFamily="sans-serif"
+                        x:Name="ScheduleCheckBox"
+                        />
+
+                    <Border
+                        IsVisible="{Binding IsChecked, ElementName=ScheduleCheckBox}"
+                        Padding="14"
+                        BorderBrush="#404040"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        >
+
+                        <StackPanel Spacing="10">
+
+                            <TextBlock
+                                Text="Дата и время отправки"
+                                FontWeight="SemiBold"/>
+
+                            <StackPanel  Spacing="10">
+
+                                <StackPanel Spacing="5">
+
+                                    <TextBlock
+                                        Text="Дата"
+                                        Opacity="0.7"
+                                        FontFamily="sans-serif"/>
+
+                                    <DatePicker
+                                        SelectedDate="{Binding IsChecked, ElementName=ScheduleCheckBox}"/>
+
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Spacing="5">
+
+                                    <TextBlock
+                                        Text="Время"
+                                        Opacity="0.7"
+                                        FontFamily="sans-serif"/>
+
+                                    <TimePicker
+                                        SelectedTime="{Binding IsChecked, ElementName=ScheduleCheckBox}"/>
+
+                                </StackPanel>
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </StackPanel>
+
+
+
+
+            </StackPanel>
+
+
+
+            <!-- PREVIEW -->
+
+            <Border
+                Padding="14"
+                BorderBrush="#404040"
+                BorderThickness="1"
+                CornerRadius="14">
+
+                <StackPanel Spacing="10">
+
+                    <TextBlock
+                        Text="Предпросмотр"
+                        FontSize="18"
+                        FontWeight="SemiBold"/>
+
+                    <Border
+                        Padding="12"
+                        Background="#242424"
+                        CornerRadius="12">
+
+                        <StackPanel Spacing="8">
+
+                            <TextBlock
+                                Text="My Channel"
+                                FontWeight="SemiBold"/>
+
+                            <Border
+                                Height="220"
+                                CornerRadius="10"
+                                ClipToBounds="True">
+
+                                <Rectangle Fill="#303030"/>
+
+                            </Border>
+
+                            <TextBlock
+                                Text="Здесь будет текст публикации..."
+                                TextWrapping="Wrap"
+                                FontFamily="sans-serif"/>
+
+                            <TextBlock
+                                Text="#anime #art #news"
+                                Opacity="0.7"
+                                FontFamily="sans-serif"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </StackPanel>
+
+            </Border>
+
+
+            <!-- MOBILE ACTIONS -->
+
+            <StackPanel
+                Spacing="8"
+                Margin="0,0,0,20">
+
+                <Button
+                    Height="48"
+                    Content="Сохранить"/>
+
+                <Button
+                    Height="52"
+                    Content="Отправить"/>
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </ScrollViewer>
+</UserControl>

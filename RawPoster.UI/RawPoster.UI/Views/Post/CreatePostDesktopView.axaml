@@ -1,0 +1,355 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RawPoster.UI.Views.Post.CreatePostDesktopView">
+    <ScrollViewer
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+
+        <StackPanel
+            Spacing="16"
+            Margin="16"
+            HorizontalAlignment="Stretch"
+            MaxWidth="900">
+
+            <StackPanel Spacing="3">
+
+                <TextBlock
+                    Text="Создание поста"
+                    FontSize="26"
+                    FontWeight="SemiBold"/>
+
+                <TextBlock
+                    Text="Создайте публикацию и отправьте её в Telegram"
+                    Opacity="0.6"/>
+
+            </StackPanel>
+
+
+            <!-- TEMPLATE / CHANNEL -->
+
+            <Grid
+                ColumnDefinitions="140,*"
+                ColumnSpacing="8">
+
+                <StackPanel Spacing="3">
+
+                    <TextBlock Text="Шаблон"/>
+
+                    <ComboBox
+                        Height="44"
+                        PlaceholderText="Выберите шаблон"/>
+
+                </StackPanel>
+
+
+                <StackPanel
+                    Grid.Column="1"
+                    Spacing="3">
+
+                    <TextBlock Text="Канал"/>
+
+                    <ComboBox
+                        Height="44"
+                        PlaceholderText="Выберите канал"/>
+
+                </StackPanel>
+
+            </Grid>
+
+
+            <!-- TEXT -->
+
+            <StackPanel Spacing="6">
+
+                <TextBlock
+                    Text="Текст публикации"
+                    FontWeight="SemiBold"/>
+
+                <Border
+                    BorderBrush="#404040"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="4">
+
+                    <TextBox
+                        Name="EditorTextBox"
+                        MinHeight="190"
+                        Padding="12"
+                        Watermark="Напишите текст поста..."
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap"
+                        VerticalContentAlignment="Top"
+                        TextChanged="PostTextChanged"/>
+
+                </Border>
+
+            </StackPanel>
+
+
+            <!-- MEDIA -->
+
+            <StackPanel Spacing="8">
+
+                <Grid ColumnDefinitions="*,Auto">
+
+                    <StackPanel>
+
+                        <TextBlock
+                            Text="Медиа"
+                            FontSize="17"
+                            FontWeight="SemiBold"/>
+
+                        <TextBlock
+                            Text="До 10 изображений"
+                            FontSize="12"
+                            Opacity="0.6"/>
+
+                    </StackPanel>
+
+                </Grid>
+
+
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Disabled">
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="10">
+
+                        <Border
+                            Width="150"
+                            Height="120"
+                            BorderBrush="#505050"
+                            BorderThickness="1"
+                            CornerRadius="10">
+
+                            <Grid>
+
+                                <Rectangle Fill="#252525"/>
+
+                                <TextBlock
+                                    Text="🖼"
+                                    FontSize="28"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                                <Button
+                                    Content="×"
+                                    Width="28"
+                                    Height="28"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Margin="5"/>
+
+                            </Grid>
+
+                        </Border>
+
+
+                        <Border
+                            Width="150"
+                            Height="120"
+                            BorderBrush="#505050"
+                            BorderThickness="1"
+                            CornerRadius="10">
+
+                            <Grid>
+
+                                <Rectangle Fill="#252525"/>
+
+                                <TextBlock
+                                    Text="🖼"
+                                    FontSize="28"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                                <Button
+                                    Content="×"
+                                    Width="28"
+                                    Height="28"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Margin="5"/>
+
+                            </Grid>
+
+                        </Border>
+
+
+                        <Button
+                            Width="150"
+                            Height="120"
+                            Content="＋&#x0a;Добавить изображение"/>
+
+                    </StackPanel>
+
+                </ScrollViewer>
+
+
+                <Grid ColumnDefinitions="*,Auto">
+
+                    <Button
+                        Content="🔎  Найти источник"
+                        HorizontalAlignment="Left"/>
+
+                    <CheckBox
+                        Grid.Column="1"
+                        Content="Отправить как спойлер"
+                        VerticalAlignment="Center"/>
+
+                </Grid>
+
+                <StackPanel Spacing="8">
+                    <CheckBox
+                        Grid.Column="1"
+                        Content="Отправить отложено"
+                        x:Name="ScheduleCheckBox"
+                        />
+
+                    <Border
+                        IsVisible="{Binding IsChecked, ElementName=ScheduleCheckBox}"
+                        Padding="14"
+                        BorderBrush="#404040"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        >
+
+                        <StackPanel Spacing="10">
+
+                            <TextBlock
+                                Text="Дата и время отправки"
+                                FontWeight="SemiBold"/>
+
+                            <StackPanel  Spacing="10">
+
+                                <StackPanel Spacing="5">
+
+                                    <TextBlock
+                                        Text="Дата"
+                                        Opacity="0.7"/>
+
+                                    <DatePicker
+                                        SelectedDate="{Binding IsChecked, ElementName=ScheduleCheckBox}"/>
+
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Spacing="5">
+
+                                    <TextBlock
+                                        Text="Время"
+                                        Opacity="0.7"/>
+
+                                    <TimePicker
+                                        SelectedTime="{Binding IsChecked, ElementName=ScheduleCheckBox}"/>
+
+                                </StackPanel>
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </StackPanel>
+
+            </StackPanel>
+
+
+            <!-- SEARCH -->
+
+            <Border
+                Padding="14"
+                BorderBrush="#404040"
+                BorderThickness="1"
+                CornerRadius="12">
+
+                <StackPanel Spacing="8">
+
+                    <TextBlock
+                        Text="Источники изображения"
+                        FontSize="16"
+                        FontWeight="SemiBold"/>
+
+                    <TextBlock
+                        Text="Результаты FuzzySearch появятся здесь"
+                        Opacity="0.6"/>
+
+                    <Border
+                        Padding="10"
+                        Background="#252525"
+                        CornerRadius="8">
+
+                        <Grid ColumnDefinitions="*,Auto">
+
+                            <StackPanel>
+
+                                <TextBlock
+                                    Text="Example Site"
+                                    FontWeight="SemiBold"/>
+
+                                <TextBlock
+                                    Text="https://example.com/post/123"
+                                    TextWrapping="Wrap"
+                                    Opacity="0.7"/>
+
+                            </StackPanel>
+
+                            <Button
+                                Grid.Column="1"
+                                Content="Использовать"/>
+
+                        </Grid>
+
+                    </Border>
+
+                </StackPanel>
+
+            </Border>
+
+
+            <!-- ACTIONS -->
+
+            <Grid
+                ColumnDefinitions="*,Auto,Auto"
+                ColumnSpacing="10"
+                Margin="0,0,0,20">
+
+                <TextBlock
+                    Text="Готово к публикации"
+                    VerticalAlignment="Center"
+                    Opacity="0.6"/>
+
+                <Button
+                    Grid.Column="1"
+                    Content="Сохранить"
+                    Padding="30,10"
+                    Height="44"
+                    MinWidth="120"/>
+
+                <Button
+                    Grid.Column="2"
+                    Content="Отправить"
+                    Padding="30,10"
+                    Height="44"
+                    MinWidth="140"/>
+
+
+
+            </Grid>
+
+        </StackPanel>
+
+
+
+    </ScrollViewer>
+
+
+
+
+</UserControl>

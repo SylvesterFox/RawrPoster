@@ -6,6 +6,8 @@
         xmlns:views="using:RawPoster.UI.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RawPoster.UI.Views.MainWindow"
+        MaxWidth="940"
+        MaxHeight="743"
         Icon="/Assets/avalonia-logo.ico"
         Title="RawPoster.UI">
         <views:MainView />

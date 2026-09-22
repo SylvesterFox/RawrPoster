@@ -1,8 +1,9 @@
 ﻿<Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:theme="using:CCSWE.Avalonia.Material"
              xmlns:local="using:RawPoster.UI"
              x:Class="RawPoster.UI.App"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Dark">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
@@ -10,6 +11,6 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme />
+        <theme:MaterialTheme  />
     </Application.Styles>
 </Application>

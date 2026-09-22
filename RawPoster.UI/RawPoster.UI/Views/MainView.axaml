@@ -1,76 +1,193 @@
 ﻿<UserControl
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Class="RawPoster.UI.Views.MainView">
+    xmlns:post="using:RawPoster.UI.Views.Post"
+    x:Class="RawPoster.UI.Views.MainView"
+    SizeChanged="MainViewSizeChanged">
 
-    <ScrollViewer>
-        <StackPanel
-            Margin="24"
-            Spacing="16"
-            MaxWidth="700"
-            HorizontalAlignment="Center">
+    <Grid RowDefinitions="64,*">
 
-            <!-- Заголовок -->
-            <TextBlock
-                Text="RawrPoster"
-                FontSize="28"
-                FontWeight="Bold"
-                HorizontalAlignment="Center" />
+        <!-- ====================================================== -->
+        <!-- TOP BAR                                                -->
+        <!-- ====================================================== -->
 
-            <TextBlock
-                Text="Публикация поста в Telegram"
-                FontSize="16"
-                Opacity="0.7"
-                HorizontalAlignment="Center" />
+        <Border
+            Grid.Row="0"
+            BorderBrush="#404040"
+            BorderThickness="0,0,0,1"
+            Padding="16,0">
 
-            <!-- Канал -->
-            <StackPanel Spacing="6">
-                <TextBlock
-                    Text="Telegram-канал"
-                    FontWeight="SemiBold" />
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto">
 
-                <TextBox
-                    Name="ChannelTextBox"
-                    Watermark="@channel или ID канала" />
-            </StackPanel>
+                <!-- Mobile menu -->
+                <Button
+                    x:Name="MenuButton"
+                    Grid.Column="0"
+                    Content="☰"
+                    Width="42"
+                    Height="42"
+                    Margin="0,0,8,0"
+                    VerticalAlignment="Center"
+                    IsVisible="False"
+                    Padding="0, 10, 0, 10"
+                    Click="MenuButtonClick"/>
 
-            <!-- Текст поста -->
-            <StackPanel Spacing="6">
-                <TextBlock
-                    Text="Текст поста"
-                    FontWeight="SemiBold" />
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center">
 
-                <TextBox
-                    Name="PostTextBox"
-                    Watermark="Введите текст поста..."
-                    AcceptsReturn="True"
-                    TextWrapping="Wrap"
-                    MinHeight="220"
-                    VerticalContentAlignment="Top" />
-            </StackPanel>
+                    <TextBlock
+                        Text="RawrPoster"
+                        FontSize="20"
+                        FontWeight="SemiBold"/>
 
-            <!-- Кнопка -->
-            <Button
-                Name="PublishButton"
-                Content="Опубликовать"
-                HorizontalAlignment="Stretch"
-                Height="48"
-                />
+                    <TextBlock
+                        Text="Telegram post editor"
+                        FontSize="12"
+                        Opacity="0.6"/>
 
-            <!-- Статус -->
+                </StackPanel>
+
+                <!-- Bot status -->
+
+                <StackPanel
+                    x:Name="BotStatus"
+                    Grid.Column="2"
+                    Orientation="Horizontal"
+                    Spacing="6"
+                    VerticalAlignment="Center"
+                    Margin="0,0,8,0">
+
+                    <Ellipse
+                        Width="8"
+                        Height="8"
+                        Fill="#4CAF50"/>
+
+                    <TextBlock
+                        Text="Bot connected"
+                        VerticalAlignment="Center"
+                        Opacity="0.75"/>
+
+                </StackPanel>
+
+                <!-- Settings -->
+
+                <Button
+                    Grid.Column="3"
+                    Content="⚙"
+                    Width="42"
+                    Height="42"
+                    Padding="1, 10, 0, 10"
+                    VerticalAlignment="Center"/>
+
+            </Grid>
+
+        </Border>
+
+
+        <!-- ====================================================== -->
+        <!-- BODY                                                    -->
+        <!-- ====================================================== -->
+
+        <Grid
+            x:Name="BodyGrid"
+            Grid.Row="1"
+            ColumnDefinitions="246,*"
+            >
+
+            <!-- ================================================== -->
+            <!-- SIDEBAR                                             -->
+            <!-- ================================================== -->
+
             <Border
-                Padding="12"
-                CornerRadius="8"
-                Background="#202225">
+                x:Name="Sidebar"
+                Grid.Column="0"
+                Width="230"
+                Margin="16"
+                HorizontalAlignment="Left"
+                Padding="14"
+                BorderBrush="#404040"
+                BorderThickness="1"
+                CornerRadius="12"
+                ZIndex="10"
+                Background="#404040">
 
-                <TextBlock
-                    Name="StatusTextBlock"
-                    Text="Готово к публикации"
-                    HorizontalAlignment="Center" />
+                <Grid RowDefinitions="Auto,Auto,*">
+
+                    <StackPanel
+                        Grid.Row="0"
+                        Spacing="7">
+
+                        <TextBlock
+                            Text="Основные"
+                            FontSize="15"
+                            FontWeight="SemiBold"
+                            Margin="0,0,0,4"/>
+
+                        <Button
+                            Grid.Row="0"
+                            Content="＋ Новый пост"
+                            HorizontalContentAlignment="Left"/>
+
+                        <Button
+                            Content="Создать шаблон"
+                            HorizontalContentAlignment="Left"/>
+
+                        <Button
+                            Content="Список шаблонов"
+                            HorizontalContentAlignment="Left"/>
+
+                        <Button
+                             Content="Отложенные посты"
+                             HorizontalContentAlignment="Left"/>
+
+
+                    </StackPanel>
+
+
+
+                    <StackPanel
+                        Grid.Row="2"
+                        VerticalAlignment="Bottom"
+                        Spacing="5">
+
+                        <TextBlock
+                            Text="Дополнительно"
+                            FontSize="15"
+                            FontWeight="SemiBold"
+                            Margin="0,0,0,6"/>
+
+                        <Button
+                            Content="#  Хэштеги"
+                            HorizontalContentAlignment="Left"/>
+
+                        <Button
+                            Content="◷  История"
+                            HorizontalContentAlignment="Left"/>
+
+                        <Button
+                            Content="⚙  Настройки"
+                            HorizontalContentAlignment="Left"/>
+
+                    </StackPanel>
+
+                </Grid>
 
             </Border>
 
-        </StackPanel>
-    </ScrollViewer>
+
+            <!-- ================================================== -->
+            <!-- CONTENT                                     -->
+            <!-- ================================================== -->
+
+            <post:CreatePostView
+                x:Name="CreatePostView"
+                Grid.Column="1"
+                Margin="30,16,30,16"/>
+
+
+        </Grid>
+
+    </Grid>
 
 </UserControl>

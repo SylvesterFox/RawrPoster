@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RawPoster.UI.ViewModels
 {
-    public class MainViewModel
+    internal class CreatePostViewModel
     {
     }
 }
