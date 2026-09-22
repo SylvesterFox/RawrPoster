@@ -1,11 +1,13 @@
 ﻿
 using RawrPoster.Core.Entites;
+using RawrPoster.Application.Interfaces;
 using Telegram.Bot;
+using Telegram.Bot.Types;
 
 
-namespace Infrastructure.Telegram
+namespace RawrPoster.Infrastructure.Telegram
 {
-    public sealed class TelegramPublisher
+    public sealed class TelegramPublisher : ITelegramPublisher
     {
         private readonly TelegramBotClient _bot;
 
@@ -19,10 +21,19 @@ namespace Infrastructure.Telegram
             Post post,
             CancellationToken cancellationToken = default)
         {
-            var message = await _bot.SendMessage(
-                chatId: channel,
-                text: post.Text,
-                cancellationToken: cancellationToken);
+            if (post.Media is { LocalPath: { Length: > 0 } path } && File.Exists(path))
+            {
+                await using var stream = File.OpenRead(path);
+                var photoMessage = await _bot.SendPhoto(
+                    chatId: channel,
+                    photo: InputFile.FromStream(stream, post.Media.FileName),
+                    caption: post.Text,
+                    hasSpoiler: post.HasSpoiler,
+                    cancellationToken: cancellationToken);
+                return photoMessage.Id;
+            }
+
+            var message = await _bot.SendMessage(chatId: channel, text: post.Text, cancellationToken: cancellationToken);
 
             return message.Id;
         }
